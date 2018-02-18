@@ -1,6 +1,6 @@
 # Project-1
 
-In order for the images to work the "www" folder must be present as a subfolder inside the shiny "app" folder.
+In order for the images to work the "www" folder must be present as a subfolder inside the "Shiny" folder.
 
 Once in RStudio the www folder must be selected on the bottom right panel under the files tab.
 
