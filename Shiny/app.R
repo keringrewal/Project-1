@@ -153,7 +153,7 @@ server <- function(input, output) {
         avg_lst <- c(avg_lst,element)
       }
       
-      avgVec <- as_vector(rev(avg_lst)) 
+      avgVec <- as.vector(rev(avg_lst)) 
       years <- c(2000:2017) #  will be used as a paramter for the points
       yearStr <- as.character(years) # Conversion of proir vector to Strings to be used as labels
       
