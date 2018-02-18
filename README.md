@@ -4,7 +4,7 @@ In order for the images to work the "www" folder must be present as a subfolder 
 
 Once in RStudio the www folder must be selected on the bottom right panel under the files tab.
 
-On the top right under the Environment Tab the csv files must be imported by clicking on the import Dataset tab, then by clicking on "From Text (base) and oppening the 3 csv files needed for the app:
+On the top right under the "Environment Tab" the csv files must be imported by clicking on the "Import Dataset" tab, then by clicking on "From Text (base)" and oppening the 3 csv files needed for the app:
 
    <li>
       BP Apprehensions 2010.csv
@@ -17,5 +17,7 @@ On the top right under the Environment Tab the csv files must be imported by cli
    </li>
     
 
+
+
 Once the csvs are successfully imported,
-simply click on the "Run app" button on the top left 
+simply click on the "Run app" button on the top left & Enjoy!
