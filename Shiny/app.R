@@ -44,8 +44,8 @@ ui <- fluidPage(theme = shinytheme("slate"),
                     br(),
             
                     # Trump Cartoon Video
-                    h5("Actual Trump Quotes Read by Cartoon Trump"),
-                    HTML('<iframe width="390" height="270" src="https://www.youtube.com/embed/DREO6cwbGeQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'),
+                    h5("Tucson sector sees big drop in border apprehensions"),
+                    HTML('<iframe width="390" height="270" src="https://www.youtube.com/embed/5PU2opPpw58" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'),
                     br(),
                     
                     #Logos
