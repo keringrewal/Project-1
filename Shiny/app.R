@@ -9,7 +9,6 @@
 
 library(shiny)
 library(datasets)
-library(shinythemes)
 
 #import data from CSVs
 data2010 <- read.csv('BP Apprehensions 2010.csv')
@@ -20,7 +19,7 @@ ts2 <- as.vector(t(ts1))
 
 # Define UI for application
 
-ui <- fluidPage(theme = shinytheme("slate"),
+ui <- fluidPage(
                 
                 #title
                 titlePanel("US-Mexico Boarder Patrol Apprehensions"),
