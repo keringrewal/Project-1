@@ -1,10 +1,7 @@
-# Project-1
+# Project 1             
+## Us-Mexico Apprehension Analysis
 
-In order for the images to work the "www" folder must be present as a subfolder inside the "Shiny" folder.
-
-Once in RStudio the www folder must be selected on the bottom right panel under the files tab.
-
-On the top right under the "Environment Tab" the csv files must be imported by clicking on the "Import Dataset" tab, then by clicking on "From Text (base)" and oppening the 3 csv files needed for the app:
+After importing the following Csv files via the instrucitons in the Shiny App folder
 
    <li>
       BP Apprehensions 2010.csv
@@ -16,8 +13,8 @@ On the top right under the "Environment Tab" the csv files must be imported by c
      PB monthly summaries.csv
    </li>
     
-
-
-
-Once the csvs are successfully imported,
-simply click on the "Run app" button on the top left & Enjoy!
+<br>
+The App will produce details via analytical visual plots made from the US-Mexico Apprehension Data provided, along with a CNN Summary and most importantly 
+## HILARIOUS videos 
+linked with the CNN report
+Enjoy!
