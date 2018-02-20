@@ -1,7 +1,7 @@
 # Project 1             
 ## Us-Mexico Apprehension Analysis
 
-After importing the following Csv files via the instrucitons in the Shiny App folder
+After importing the following csv files via the instrucitons in the Shiny App folder
 
    <li>
       BP Apprehensions 2010.csv
@@ -14,4 +14,10 @@ After importing the following Csv files via the instrucitons in the Shiny App fo
    </li>
     
 <br>
-The App will produce details via analytical visual plots made from the US-Mexico Apprehension Data provided, along with a CNN Summary and most importantly  
+The App will produce details via analytical visual plots made from the US-Mexico Apprehension Data provided, along with a CNN Summary.
+
+</br>
+The slides contain the information formatted in a slideshow.
+
+</br>
+The document lays out the information one additional time.
