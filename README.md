@@ -17,7 +17,9 @@ After importing the following csv files via the instrucitons in the Shiny App fo
 The App will produce details via analytical visual plots made from the US-Mexico Apprehension Data provided, along with a CNN Summary.
 
 </br>
+</br>
 The slides contain the information formatted in a slideshow.
 
 </br>
-The document lays out the information one additional time.
+</br>
+The r markdown document lays out the information one final time.
