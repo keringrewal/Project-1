@@ -14,7 +14,9 @@ After importing the following Csv files via the instrucitons in the Shiny App fo
    </li>
     
 <br>
-The App will produce details via analytical visual plots made from the US-Mexico Apprehension Data provided, along with a CNN Summary and most importantly 
+The App will produce details via analytical visual plots made from the US-Mexico Apprehension Data provided, along with a CNN Summary and most importantly  
+
 ## HILARIOUS videos 
+
 linked with the CNN report
 Enjoy!
