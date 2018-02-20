@@ -45,12 +45,32 @@ The following graph represents a Summary of the Apprehensions made at the US-Mex
 \caption{Us Apprehension Summary Plot}
 \end{figure}
 
+
 .\\
 .\\
-It is seen from the figure above that Apprehensions throughout time have been slowly decreasing, and it is now as low as it once was back in the year 2011. This is being accredited to Donald Trumps aggression on border patrol and the desire to build a higher wall to prevent the US from having Mexicans or anybody fleeing their country to illegally cross the border into the states 
+It is seen from the figure above that Apprehensions throughout time have been slowly decreasing, and it is now as low as it once was back in the year 2011. This is being accredited to Donald Trumps aggression on border patrol and the desire to build a higher wall to prevent the US from having Mexicans or anybody fleeing their country to illegally cross the border into the states
 
 \pagebreak
 
+\subsection{Statistical Tests}
+\begin{center}
+Below are some statistical tests on the data on the boarder apprehensions from 2000 to 2017.\\
+.\\
+
+\end{center}
+<<Apprehensions Summary Statistical Tests>>=
+summ <- read.csv('PB monthly summaries.csv')
+
+t.test(summ)
+
+qqnorm(summ[,7])
+
+summ$year=NULL
+summary(summ)
+
+@
+
+\pagebreak
 \section{Top three Month Periods with the most Apprehensions}
 .\\
 Looking at the data and being able to manipulate and run a quick analysis on the apprehensions for both 2010 and 2017 we came up with the following conclusions for the most apprehensions in those years respectively by using the following scrypt:\\
@@ -284,5 +304,31 @@ In the following plots you will be able to visualize the differences in years Ac
 \end{figure}
 
 \pagebreak
+
+\subsection{Statistical Tests}
+\begin{center}
+Below are some statistical tests on the 2010 and 2017 data.\\
+.\\
+
+\end{center}
+<<BP Apprehensions by Sector in 2010 and 2017>>=
+data2010 <- read.csv('BP Apprehensions 2010.csv')
+data2017 <- read.csv('PB Apprehensions 2017.csv')
+
+a10.data = data2010$April
+
+a17.data = data2017$April
+
+
+t.test(a10.data, a17.data, paired = TRUE)
+
+var.test(a10.data, a17.data)
+
+data2010$Sector= NULL
+summary(data2010)
+
+data2017$Sector= NULL
+summary(data2017)
+@
 
 \end{document}

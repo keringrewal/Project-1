@@ -13,6 +13,19 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+```{r, echo=FALSE}
+library(knitr)
+data2010 <- read.csv('BP Apprehensions 2010.csv')
+data2017 <- read.csv('PB Apprehensions 2017.csv')
+
+
+name =  c("October", "November", "December", "January", "February", "March", "April", "May", "June", "July", "August", "September")
+
+colrs = c("yellow", "blue")
+yrs = c("2010", "2017")
+```
+
 ## Slide Layout
 
 <br>
@@ -40,7 +53,6 @@ US-Mexico boarder apprehensions have been steadily declining since 2000, and in 
 DHS credits the administration policy as the lowest apprehensions prior to this past April were in December of 2011. This new low is 7,000 apprehensions less than the previous. In a year since April 2016, apprehensions were down 62%, though there are multiple different reasons for such a change.
 Throughout these slides you can find the monthly summaries of apprehensions by sector in a time series from 2000 to 2017 depicting the changes throughout time. But first, on the next slide will be the video linked to this report.
 
-<img src="Graphs/carttrump.jpg" width="610" height= "290">
 
 ## Trumps Border Wall Pledge Vs. Reality:
 
@@ -51,7 +63,42 @@ Throughout these slides you can find the monthly summaries of apprehensions by s
 
 The following graph represents a Summary of the Apprehensions made at the US-Mexico border between the years 2000 through the year 2017. Each green marker represents the average apprehension rate for that year.
 
-<img src="Graphs/SummaryPlot.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+ts1 <- read.csv('PB monthly summaries.csv',row.names=1) #Reads in Csv
+ts2 <- as.vector(t(ts1))
+
+ts3 <- ts(rev(ts2), start = c(2000, 1), frequency=12)
+      
+mat <- as.matrix(ts1)
+      
+avg_lst <- list() # List used to append the averages of each year 
+for (i in 1:18){
+  element <- mean(mat[i,])
+  avg_lst <- c(avg_lst,element)
+}
+
+      avgVec <- as.vector(rev(avg_lst)) 
+      years <- c(2000:2017) #  will be used as a paramter for the points
+      yearStr <- as.character(years) # Conversion of proir vector to Strings to be used as labels
+      
+      par(bg = "black")
+      ts.plot(ts3, gpars=list(main = "US Apprehensions Yearly Summary", col.main = "white", font.main = 2,family = "mono",xlab="Year", ylab="Apprehensions",xlim = c(2000,2017), ylim = c(0,250000),pch = 19,axes = FALSE,col= 'maroon', lwd=2,lty=c(1:3)))
+      yticks <- seq(50000, 200000, 20000) # y Axis Bounds incrementing by 20k
+      
+      #Custom x and y axis
+      axis(1, col = 'maroon', col.axis = 'white', col.ticks = 'limegreen', cex.axis = 1.5, font = 2, family = 'mono')
+      axis(2, at = yticks, col = 'maroon', col.axis = 'white', col.ticks = 'limegreen', cex.axis = 0.9, font =3, family = 'mono',las=2)
+      
+      abline(h = yticks, lty = 2, col = "grey26") # Horizontal line Grid
+      
+      # Mean apprehensions per year
+      points(years, avgVec, pch = 13, col = "limegreen",lwd = 1)
+      text(years,avgVec,labels=yearStr, cex=0.6, pos = 3,col= "white") # Point Labels
+      
+      legend(2011,250000,pch=c(13),col = "limegreen",title.adj = 0.5,title = "Legend",title.col = "grey30",text.col = "grey45",legend=c(":  Avg. Apprehension"),box.lty=2, box.lwd=2, box.col="limegreen")
+      
+
+```
 
 ## Apprehension Summary Analysis
 
@@ -61,7 +108,14 @@ It is seen from the previous slide that Apprehensions throughout time have been 
 
 Looking at the data and being able to manipulate and run a quick analysis on the apprehensions for both 2010 and 2017 we came up with the following conclusions for the most apprehensions in those years respectively by using the following R scrypt: 
 
-<img src="Graphs/code.jpeg" width="660" height= "320">
+```{r, echo= TRUE}
+ts1 <- read.csv('PB monthly summaries.csv',row.names=1)
+mat <- as.matrix(ts1)
+
+#top 3 apprehensions per year in 2010 and 2017
+max_apps_2010 <- tail(sort(mat["2010", ]), 3)
+max_apps_2017 <- tail(sort(mat["2017", ]), 3)
+```
 
 ## Scrypt Output
 
@@ -74,109 +128,382 @@ Top 3 highest Apprehensions for the year 2010  | Top 3 highest Apprehensions for
 <br>
 <br> 
 
-Depicted in the graph above It is noted that the maximum apprehensions for the year 2010 was 61361 for the month of March and the maximum apprehensions for the year 2017 was 47211 for the month of November.
+Depicted in the table above, it is noted that the maximum apprehensions in the year 2010 were 61361 in the month of March, and the maximum apprehensions in the year 2017 were 47211 in the month of November.
 
 ## Change in Maximum Apprehensions
 
-Using simple statistical tests like those demonstrated in class we were able to compare the sector with the most apprehensions for 2010 and with the sector with the most apprehensions in 2017. As stated in the previous slide It is noted that the maximum apprehensions for the year 2010 was in the month of March with 61361 and the maximum apprehensions for the year 2017 was in Novemeber with 47211. The difference in Apprehensions was a total of 14150. Noting that Apprehensions since the year 2010 are significantly lower now in 2018.  
+Using simple statistical tests like those demonstrated in class we were able to compare the sector with the most apprehensions in 2010 with the sector with the most apprehensions in 2017. The difference in the maximum apprehensions for each year was a total of 14150. Noting that Apprehensions since the year 2010 were significantly lower in 2017.  
 
-<img src="Graphs/dv.png" width="980" height= "310">
-
-## Data Visualizations
-
-Using R's built-in plotting methods, we are able to visualize US-Mexico Apprehension data, comparing the 2010 and 2017 statistics by month and sector. By using simple statistical tests like those demonstrated in class we are able to demonstrate side by side visualizations of the years 2010 and 2017 comparing the data by sector.
-In the following plots you will be able to visualize the differences in years According to sector Beggining with the Big Bend Sector.
-
-<img src="Graphs/dv1.png" width="680" height= "310">
 
 ## Big Bend Apprehension Analysis 
 
-<img src="Graphs/BigBend.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+colu = as.numeric('1')
+d1 = as.data.frame(data2010[c(colu),])
+
+d2 = as.data.frame(data2017[c(colu),])
+
+mydata <- rbind(d1, d2)
+mydata$Sector <- NULL
+rownames(mydata) <- yrs
+
+barplot(as.matrix(mydata), 
+        beside = TRUE,
+        main = "Big Bend Boarder Patrol Apprehensions in 2010 and 2017",
+        xlab = "Months",
+        ylab = "Apprehensions",
+        names.arg = name,
+        col = colrs, 
+        bty="n" )
+        legend("topright", c("2010","2017"), pch=15,  col=c("yellow","blue"),  bty="n")
+
+```
 
 Depicted from the plot above it can be seen that the most apprehensions for this sector happened in the month of October in the year 2017
 
 
 ## Big Bend Table
-<img src="Graphs/BigBendTable.jpeg" width="770" height= "70">
+```{r}
+#Bind the data from each dataset
+mydata <- rbind(d1, d2)
+      
+#Take out the row which lists the sector
+mydata$Sector <- NULL
+#Specify which row is which year
+rownames(mydata) <- c("2010", "2017")
+      
+kable(mydata)
+```
+
 <img src="Graphs/bigbendpic.jpg" width="830" height= "450">
 
 ## Del Rio Apprehension Analysis
 
-<img src="Graphs/DelRio.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+colu = as.numeric('2')
+d1 = as.data.frame(data2010[c(colu),])
+
+d2 = as.data.frame(data2017[c(colu),])
+
+mydata <- rbind(d1, d2)
+mydata$Sector <- NULL
+rownames(mydata) <- yrs
+
+barplot(as.matrix(mydata), 
+        beside = TRUE,
+        main = "Del Rio Boarder Patrol Apprehensions in 2010 and 2017",
+        xlab = "Months",
+        ylab = "Apprehensions",
+        names.arg = name,
+        col = colrs, 
+        bty="n" )
+        legend("topright", yrs, pch=15,  col=c("yellow","blue"),  bty="n")
+
+```
 
 Depicted from the plot above it can be seen that the most apprehensions for this sector happened in the month of October in the year 2017
 
 ## Del Rio Table
-<img src="Graphs/DelRioTable.jpeg" width="770" height= "70">
+```{r}
+#Bind the data from each dataset
+mydata <- rbind(d1, d2)
+      
+#Take out the row which lists the sector
+mydata$Sector <- NULL
+#Specify which row is which year
+rownames(mydata) <- c("2010", "2017")
+      
+kable(mydata)
+```
+
 <img src="Graphs/dRioPic.jpg" width="830" height= "450">
 
 ## El Centro Apprehension Analysis
 
-<img src="Graphs/ElCentro.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+colu = as.numeric('3')
+d1 = as.data.frame(data2010[c(colu),])
+
+d2 = as.data.frame(data2017[c(colu),])
+
+mydata <- rbind(d1, d2)
+mydata$Sector <- NULL
+rownames(mydata) <- yrs
+
+barplot(as.matrix(mydata), 
+        beside = TRUE,
+        main = "El Centro Boarder Patrol Apprehensions in 2010 and 2017",
+        xlab = "Months",
+        ylab = "Apprehensions",
+        names.arg = name,
+        col = colrs, 
+        bty="n" )
+        legend("topright", yrs, pch=15,  col=c("yellow","blue"),  bty="n")
+
+```
 
 Depicted from the plot above it can be seen that the most apprehensions for this sector happened in the month of March in the year 2010
 
 ## El Centro Table
-<img src="Graphs/ElCentroTable.jpeg" width="770" height= "70">
+```{r}
+#Bind the data from each dataset
+mydata <- rbind(d1, d2)
+      
+#Take out the row which lists the sector
+mydata$Sector <- NULL
+#Specify which row is which year
+rownames(mydata) <- c("2010", "2017")
+      
+kable(mydata)
+```
+
+
 <img src="Graphs/elcentropic.jpg" width="830" height= "450">
 
 ## El Paso Apprehension Analysis
 
-<img src="Graphs/ElPaso.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+colu = as.numeric('4')
+d1 = as.data.frame(data2010[c(colu),])
+
+d2 = as.data.frame(data2017[c(colu),])
+
+mydata <- rbind(d1, d2)
+mydata$Sector <- NULL
+rownames(mydata) <- yrs
+
+barplot(as.matrix(mydata), 
+        beside = TRUE,
+        main = "El Paso Boarder Patrol Apprehensions in 2010 and 2017",
+        xlab = "Months",
+        ylab = "Apprehensions",
+        names.arg = name,
+        col = colrs, 
+        bty="n" )
+        legend("topright", yrs, pch=15,  col=c("yellow","blue"),  bty="n")
+
+```
 
 Depicted from the plot above it can be seen that the most apprehensions for this sector happened in the month of November in the year 2017
 
 ## El Paso Table
-<img src="Graphs/ElPasoTable.jpeg" width="770" height= "70">
+```{r}
+#Bind the data from each dataset
+mydata <- rbind(d1, d2)
+      
+#Take out the row which lists the sector
+mydata$Sector <- NULL
+#Specify which row is which year
+rownames(mydata) <- c("2010", "2017")
+      
+kable(mydata)
+```
+
+
 <img src="Graphs/elpasopic.jpg" width="830" height= "450">
 
 ## Laredo Apprehension Analysis
 
-<img src="Graphs/Laredo.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+colu = as.numeric('5')
+d1 = as.data.frame(data2010[c(colu),])
+d2 = as.data.frame(data2017[c(colu),])
+
+mydata <- rbind(d1, d2)
+mydata$Sector <- NULL
+rownames(mydata) <- yrs
+
+barplot(as.matrix(mydata), 
+        beside = TRUE,
+        main = "Laredo Boarder Patrol Apprehensions in 2010 and 2017",
+        xlab = "Months",
+        ylab = "Apprehensions",
+        names.arg = name,
+        col = colrs, 
+        bty="n" )
+        legend("topright", yrs, pch=15,  col=c("yellow","blue"),  bty="n")
+
+```
 
 Depicted from the plot above it can be seen that the most apprehensions for this sector happened in the month of April in the year 2010
 
 ## Laredo Table
-<img src="Graphs/LaredoTable.jpeg" width="770" height= "70">
+```{r}
+#Bind the data from each dataset
+mydata <- rbind(d1, d2)
+      
+#Take out the row which lists the sector
+mydata$Sector <- NULL
+#Specify which row is which year
+rownames(mydata) <- c("2010", "2017")
+      
+kable(mydata)
+```
+
+
 <img src="Graphs/laredopic.jpg" width="830" height= "450">
 
 ## Rio Grande Valley Apprehensions 
 
-<img src="Graphs/RioGrandeValley.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+colu = as.numeric('6')
+d1 = as.data.frame(data2010[c(colu),])
+d2 = as.data.frame(data2017[c(colu),])
+
+mydata <- rbind(d1, d2)
+mydata$Sector <- NULL
+rownames(mydata) <- yrs
+
+barplot(as.matrix(mydata), 
+        beside = TRUE,
+        main = "Rio Grande Valley Boarder Patrol Apprehensions in 2010 and 2017",
+        xlab = "Months",
+        ylab = "Apprehensions",
+        names.arg = name,
+        col = colrs, 
+        bty="n" )
+        legend("topright", yrs, pch=15,  col=c("yellow","blue"),  bty="n")
+
+```
+
 
 Depicted from the plot above it can be seen that the most apprehensions for this sector happened in the month of November in the year 2017
 
 ## Rio Grande Valley Table
-<img src="Graphs/RioGrandeValleyTable.jpeg" width="770" height= "70">
+```{r}
+#Bind the data from each dataset
+mydata <- rbind(d1, d2)
+      
+#Take out the row which lists the sector
+mydata$Sector <- NULL
+#Specify which row is which year
+rownames(mydata) <- c("2010", "2017")
+      
+kable(mydata)
+```
+
+
 <img src="Graphs/riograndepic.jpg" width="830" height= "450">
 
 ## SanDiego Apprehension Analysis 
 
-<img src="Graphs/SanDiego.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+colu = as.numeric('7')
+d1 = as.data.frame(data2010[c(colu),])
+d2 = as.data.frame(data2017[c(colu),])
+
+mydata <- rbind(d1, d2)
+mydata$Sector <- NULL
+rownames(mydata) <- yrs
+
+barplot(as.matrix(mydata), 
+        beside = TRUE,
+        main = "San Diego Boarder Patrol Apprehensions in 2010 and 2017",
+        xlab = "Months",
+        ylab = "Apprehensions",
+        names.arg = name,
+        col = colrs, 
+        bty="n" )
+        legend("topright", yrs, pch=15,  col=c("yellow","blue"),  bty="n")
+
+```
 
 Depicted from the plot above it can be seen that the most apprehensions for this sector happened in the month of March in the year 2010
 
 ## SanDiego Table
-<img src="Graphs/SanDiegoTable.jpeg" width="770" height= "70">
+```{r}
+#Bind the data from each dataset
+mydata <- rbind(d1, d2)
+      
+#Take out the row which lists the sector
+mydata$Sector <- NULL
+#Specify which row is which year
+rownames(mydata) <- c("2010", "2017")
+      
+kable(mydata)
+```
+
+
 <img src="Graphs/sandiegopic.jpg" width="830" height= "450">
 
 ## Tucson Apprehension Analysis
 
-<img src="Graphs/Tucson.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+colu = as.numeric('8')
+d1 = as.data.frame(data2010[c(colu),])
+d2 = as.data.frame(data2017[c(colu),])
+
+mydata <- rbind(d1, d2)
+mydata$Sector <- NULL
+rownames(mydata) <- yrs
+
+barplot(as.matrix(mydata), 
+        beside = TRUE,
+        main = "Tuscon Boarder Patrol Apprehensions in 2010 and 2017",
+        xlab = "Months",
+        ylab = "Apprehensions",
+        names.arg = name,
+        col = colrs, 
+        bty="n" )
+        legend("topright", yrs, pch=15,  col=c("yellow","blue"),  bty="n")
+
+```
 
 Depicted from the plot above it can be seen that the most apprehensions for this sector happened in the month of March in the year 2010
 
 ## Tucson Table
-<img src="Graphs/TucsonTable.jpeg" width="770" height= "70">
+```{r}
+#Bind the data from each dataset
+mydata <- rbind(d1, d2)
+      
+#Take out the row which lists the sector
+mydata$Sector <- NULL
+#Specify which row is which year
+rownames(mydata) <- c("2010", "2017")
+      
+kable(mydata)
+```
+
+
 <img src="Graphs/tucsonpic.jpg" width="830" height= "450">
 
 ## Yuma Apprehension Analysis 
 
-<img src="Graphs/Yuma.jpeg" width="680" height= "380">
+```{r, echo=FALSE}
+colu = as.numeric('9')
+d1 = as.data.frame(data2010[c(colu),])
+d2 = as.data.frame(data2017[c(colu),])
+
+mydata <- rbind(d1, d2)
+mydata$Sector <- NULL
+rownames(mydata) <- yrs
+
+barplot(as.matrix(mydata), 
+        beside = TRUE,
+        main = "Tuscon Boarder Patrol Apprehensions in 2010 and 2017",
+        xlab = "Months",
+        ylab = "Apprehensions",
+        names.arg = name,
+        col = colrs, 
+        bty="n" )
+        legend("topright", yrs, pch=15,  col=c("yellow","blue"),  bty="n")
+
+```
 
 Depicted from the plot above it can be seen that the most apprehensions for this sector happened in the month of October in the year 2017
 
 ## Yuma Table
-<img src="Graphs/YumaTable.jpeg" width="770" height= "70">
+```{r}
+#Bind the data from each dataset
+mydata <- rbind(d1, d2)
+      
+#Take out the row which lists the sector
+mydata$Sector <- NULL
+#Specify which row is which year
+rownames(mydata) <- c("2010", "2017")
+      
+kable(mydata)
+```
+
 <img src="Graphs/yumapic.jpg" width="830" height= "450">
 
