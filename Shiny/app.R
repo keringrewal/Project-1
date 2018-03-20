@@ -81,11 +81,6 @@ ui <- fluidPage(
                     HTML('<iframe width="890" height="540" src="https://www.youtube.com/embed/lk99uQQGEok" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'),
                     br(),
 
-                    #Video Caption
-                    h4('Whats the best way for United States president-elect Donald Trump to convince people that a wall between America and Mexico is a good idea?'),
-                    h4('Why, a song in the style of Frozens "Do You Want To Build a Snowman?" of course.'),
-                    h3('Enjoy!'),
-                    br()
                   )
                 )
 )
